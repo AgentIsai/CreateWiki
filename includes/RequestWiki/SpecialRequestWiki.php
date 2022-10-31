@@ -61,6 +61,7 @@ class SpecialRequestWiki extends FormSpecialPage {
 			'subdomain' => [
 				'type' => 'text',
 				'label-message' => 'requestwiki-label-siteurl',
+				'help-message' => 'requestwiki-help-siteurl',
 				'required' => true,
 			],
 			'sitename' => [
