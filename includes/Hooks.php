@@ -4,15 +4,16 @@ namespace Miraheze\CreateWiki;
 
 use Config;
 use EchoAttributeManager;
-use MediaWiki\Hook\LoginFormValidErrorMessagesHook;
+use MediaWiki\Hook\ContributionsToolLinksHook;
 use MediaWiki\Hook\SetupAfterCacheHook;
 use Miraheze\CreateWiki\Hooks\CreateWikiHookRunner;
 use Miraheze\CreateWiki\Notifications\EchoCreateWikiPresentationModel;
 use Miraheze\CreateWiki\Notifications\EchoRequestCommentPresentationModel;
 use Miraheze\CreateWiki\Notifications\EchoRequestDeclinedPresentationModel;
+use SpecialPage;
+use Title;
 
 class Hooks implements
-	LoginFormValidErrorMessagesHook,
 	SetupAfterCacheHook
 {
 	/** @var Config */
@@ -36,11 +37,6 @@ class Hooks implements
 		if ( !in_array( 'farmer', $wgLogTypes ) ) {
 			$wgLogTypes[] = 'farmer';
 		}
-	}
-
-	/** @inheritDoc */
-	public function onLoginFormValidErrorMessages( array &$messages ) {
-		$messages[] = 'requestwiki-notloggedin';
 	}
 
 	/** @inheritDoc */
@@ -69,6 +65,18 @@ class Hooks implements
 			$wgGroupPermissions['*']['read'] = true;
 		}
 	}
+	
+	/** @inheritDoc */
+        public function onContributionsToolLinks(
+                $id, Title $nt, array &$tools, SpecialPage $sp
+        ) {
+                $tools['requestwikiqueue'] = $sp->getLinkRenderer()->makeKnownLink(
+                                SpecialPage::getTitleFor( 'RequestWikiQueue' ),
+                                $sp->msg( 'createwiki-wikirequests', $nt->getText() )->text(),
+                                [ 'class' => 'mw-contributions-link-requestwikiqueue', 'title' => $sp->msg( 'createwiki-wikirequests-text', $nt->getText() )->parse() ],
+                                [ 'dbname' => '', 'requester' => $nt->getText(), 'status' => '*' ]
+                        );
+        }
 
 	/**
 	* Add CreateWiki events to Echo
