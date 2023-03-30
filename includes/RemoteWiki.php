@@ -146,7 +146,9 @@ class RemoteWiki {
 		return $this->inactiveExempt;
 	}
 
-	public function markExempt( User $user ) {
+	public function markExempt() {
+		$user = new User;
+
 		$this->changes['inactive-exempt'] = [
 			'old' => 0,
 			'new' => 1
