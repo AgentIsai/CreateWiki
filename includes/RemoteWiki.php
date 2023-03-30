@@ -146,7 +146,7 @@ class RemoteWiki {
 		return $this->inactiveExempt;
 	}
 
-	public function markExempt() {
+	public function markExempt( User $user ) {
 		$this->changes['inactive-exempt'] = [
 			'old' => 0,
 			'new' => 1
@@ -155,7 +155,7 @@ class RemoteWiki {
 		$this->inactiveExempt = true;
 		$this->newRows += [
 			'wiki_inactive_exempt' => 1,
-			'wiki_inactive_exempt_granter' => $this->getId()
+			'wiki_inactive_exempt_granter' => $user->getId()
 		];
 	}
 
