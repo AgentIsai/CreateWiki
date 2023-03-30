@@ -4,6 +4,7 @@ namespace Miraheze\CreateWiki;
 
 use MediaWiki\MediaWikiServices;
 use Miraheze\CreateWiki\Hooks\CreateWikiHookRunner;
+use User;
 
 class RemoteWiki {
 	public $changes = [];
