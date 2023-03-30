@@ -157,7 +157,7 @@ class RemoteWiki {
 		$this->inactiveExempt = true;
 		$this->newRows += [
 			'wiki_inactive_exempt' => 1,
-			'wiki_inactive_exempt_granter' => $user->getId()
+			'wiki_inactive_exempt_granter' => $user->getUser()
 		];
 	}
 
