@@ -26,6 +26,7 @@ class RemoteWiki {
 	private $inactiveExemptReason;
 	private $deleted;
 	private $locked;
+	private $flagged;
 	private $dbcluster;
 	private $category;
 	private $experimental;
@@ -64,6 +65,7 @@ class RemoteWiki {
 		$this->inactiveExemptReason = $wikiRow->wiki_inactive_exempt_reason ?? null;
 		$this->deleted = $wikiRow->wiki_deleted_timestamp ?? 0;
 		$this->locked = $wikiRow->wiki_locked;
+		$this->flagged = $wikiRow->wiki_flagged_timestamp ?? 0;
 		$this->dbcluster = $wikiRow->wiki_dbcluster;
 		$this->category = $wikiRow->wiki_category;
 		$this->experimental = $wikiRow->wiki_experimental;
@@ -300,6 +302,32 @@ class RemoteWiki {
 		$this->log = 'unlock';
 		$this->locked = false;
 		$this->newRows['wiki_locked'] = 0;
+	}
+
+	public function isLocked() {
+		return $this->locked;
+	}
+
+	public function flag() {
+		$this->changes['flagged'] = [
+			'old' => 0,
+			'new' => 1
+		];
+
+		$this->log = 'flag';
+		$this->flagged = true;
+		$this->newRows['wiki_flagged'] = 1;
+	}
+
+	public function unflag() {
+		$this->changes['flagged'] = [
+			'old' => 1,
+			'new' => 0
+		];
+
+		$this->log = 'unflag';
+		$this->flagged = false;
+		$this->newRows['wiki_flagged'] = 0;
 	}
 
 	public function getCategory() {
