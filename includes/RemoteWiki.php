@@ -155,7 +155,7 @@ class RemoteWiki {
 		$this->newRows += [
 			'wiki_inactive_exempt' => 1,
 			'wiki_inactive_exempt_granter' => $this->getId()
-		],
+		];
 	}
 
 	public function unExempt() {
@@ -168,7 +168,7 @@ class RemoteWiki {
 		$this->newRows += [
 			'wiki_inactive_exempt' => 0,
 			'wiki_inactive_exempt_granter' => null
-		],
+		];
 
 		$this->inactiveExemptReason = null;
 		$this->newRows['wiki_inactive_exempt_reason'] = null;
