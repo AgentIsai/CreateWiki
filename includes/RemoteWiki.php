@@ -304,8 +304,8 @@ class RemoteWiki {
 		$this->newRows['wiki_locked'] = 0;
 	}
 
-	public function isLocked() {
-		return $this->locked;
+	public function isFlagged() {
+		return $this->flagged;
 	}
 
 	public function flag() {
