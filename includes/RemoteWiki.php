@@ -25,6 +25,7 @@ class RemoteWiki {
 	private $inactive;
 	private $inactiveExempt;
 	private $inactiveExemptReason;
+	private $inactiveExemptTimestamp;
 	private $deleted;
 	private $locked;
 	private $flagged;
