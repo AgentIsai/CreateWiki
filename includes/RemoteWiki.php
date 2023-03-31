@@ -65,7 +65,7 @@ class RemoteWiki {
 		$this->inactiveExempt = $wikiRow->wiki_inactive_exempt;
 		$this->inactiveExemptReason = $wikiRow->wiki_inactive_exempt_reason ?? null;
 		$this->inactiveExemptGranter = $wikiRow->wiki_inactive_exempt_granter;
-		$this->inactiveExemptTimestamp = $wikiRow->wiki_inactive_exempt_timestamp ?? 0
+		$this->inactiveExemptTimestamp = $wikiRow->wiki_inactive_exempt_timestamp ?? 0;
 		$this->deleted = $wikiRow->wiki_deleted_timestamp ?? 0;
 		$this->locked = $wikiRow->wiki_locked;
 		$this->flagged = $wikiRow->wiki_flagged;
