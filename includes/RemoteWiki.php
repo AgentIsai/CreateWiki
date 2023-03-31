@@ -61,9 +61,11 @@ class RemoteWiki {
 		$this->creation = $wikiRow->wiki_creation;
 		$this->url = $wikiRow->wiki_url;
 		$this->closed = $wikiRow->wiki_closed_timestamp ?? 0;
-		$this->inactive = $wikiRow->wiki_inactive_timestamp ?? 0;
+		$this->inactive = $wikiRow-> ?? 0;
 		$this->inactiveExempt = $wikiRow->wiki_inactive_exempt;
 		$this->inactiveExemptReason = $wikiRow->wiki_inactive_exempt_reason ?? null;
+		$this->inactiveExemptGranter = $wikiRow->wiki_inactive_exempt_granter;
+		$this->inactiveExemptTimestamp = $wikiRow->wiki_inactive_exempt_timestamp ?? 0
 		$this->deleted = $wikiRow->wiki_deleted_timestamp ?? 0;
 		$this->locked = $wikiRow->wiki_locked;
 		$this->flagged = $wikiRow->wiki_flagged;
@@ -153,11 +155,18 @@ class RemoteWiki {
 			'old' => 0,
 			'new' => 1
 		];
+		$this->changes['inactive-exempt-granter'] = [
+			'old' => null,
+			'new' => $user->getUser()
+		];
 
 		$this->inactiveExempt = true;
+		$this->inactiveExemptTimestamp = $this->dbw->timestamp();
+
 		$this->newRows += [
 			'wiki_inactive_exempt' => 1,
-			'wiki_inactive_exempt_granter' => $user->getUser()
+			'wiki_inactive_exempt_granter' => $user->getUser(),
+			'wiki_inactive_exempt_timestamp' => $this->inactiveTimeStamp
 		];
 	}
 
@@ -174,7 +183,12 @@ class RemoteWiki {
 		];
 
 		$this->inactiveExemptReason = null;
-		$this->newRows['wiki_inactive_exempt_reason'] = null;
+		$this->inactivityExemptTimestamp = false;
+
+		$this->newRows += [
+			'wiki_inactive_exempt_reason' => null,
+			'wiki_inactive_exempt_timestamp' => 0
+		];
 	}
 
 	public function setInactiveExemptReason( string $reason ) {
