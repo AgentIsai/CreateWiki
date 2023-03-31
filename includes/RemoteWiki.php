@@ -63,7 +63,7 @@ class RemoteWiki {
 		$this->closed = $wikiRow->wiki_closed_timestamp ?? 0;
 		$this->inactive = $wikiRow-> ?? 0;
 		$this->inactiveExempt = $wikiRow->wiki_inactive_exempt;
-		$this->inactiveExemptReason = $wikiRow->wiki_inactive_exempt_reason ?? null;
+		$this->inactiveExemptReason = $wikiRow->wiki_inactive_exempt_reason ?? 0;
 		$this->inactiveExemptGranter = $wikiRow->wiki_inactive_exempt_granter;
 		$this->inactiveExemptTimestamp = $wikiRow->wiki_inactive_exempt_timestamp ?? 0;
 		$this->deleted = $wikiRow->wiki_deleted_timestamp ?? 0;
@@ -166,7 +166,7 @@ class RemoteWiki {
 		$this->newRows += [
 			'wiki_inactive_exempt' => 1,
 			'wiki_inactive_exempt_granter' => $user->getUser(),
-			'wiki_inactive_exempt_timestamp' => $this->inactiveTimeStamp
+			'wiki_inactive_exempt_timestamp' => $this->inactiveExemptTimestamp
 		];
 	}
 
